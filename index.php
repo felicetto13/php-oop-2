@@ -16,7 +16,7 @@ try {
     echo "Numero carta inserito sbagliato";
 }
 try {
-    $card2= new Card(5290110902572197," ");
+    $card2= new Card(5290110902572197,"12/21");
 } catch (Exception $e) {
     echo "Numero carta inserito sbagliato";
 }
@@ -49,12 +49,13 @@ var_dump($user2); */
     }
  */
 var_dump($user1->checkout(0));
+
 /* var_dump($user1->getPaymentMethod(0)); */
 echo "---------------------------------------------------------------------";
 echo "---------------------------------------------------------------------";
 echo "---------------------------------------------------------------------";
 /* var_dump($user2->getProducts()); */
-/* var_dump($user2->checkout(0)); */
+var_dump($user2->checkout(0));
 
 
 ?>
