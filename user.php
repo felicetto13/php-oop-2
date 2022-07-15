@@ -1,12 +1,15 @@
 <?php
+
 require_once __DIR__."/cart.php";
+require_once __DIR__."/paymentMethods.php";
 class User {
+
+    use Cart, PaymentMethods;
 
     protected $firstName;
     protected $lastName;
     protected $email;
 
-    public Cart $cart;
     
 
     function __construct($_firstName,$_lastName,$_email)
@@ -15,7 +18,6 @@ class User {
         $this->setLastName($_lastName);
         $this->setEmail($_email);
 
-        $this->cart = new Cart;
     }
 
     /**

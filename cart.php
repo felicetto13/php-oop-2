@@ -1,40 +1,45 @@
 <?php
-require_once __DIR__."/products.php";
-require_once __DIR__."/cardPayment.php";
-require_once __DIR__."/customer.php";
-class Cart {
+trait Cart {
     public $products=[];
 
-    public function addProduct($product){
-        $this->products[]=$product;
+    public function addProduct(...$product){
+        array_push($this->products,...$product);
     }
     public function removeProduct(){
 
     }
     public function getProducts(){
-        /* var_dump($this->products); */
-        foreach ($this->products as $product) {
-            return $product;
-        }
+        
+        
+            return $this->products;
+        
         
     }
-    public function getTotal ($cardExpiringDate,$sale){
-        $currentYear = new DateTime("now");
-        $currentYear = $currentYear->format("Y");
+    public function getTotal (){
+        
         $totale = 0;
-        $i=0;
-        $products = $this->getProducts();/* 
-        var_dump($products); */
-        if(count($products)>0){
-            for ($i=0; $i < count($products); $i++) { 
-                $price= $products[$i]->getPrice(); 
-            $totale += $price;
-            }
+        foreach($this->products as $product){
+            $totale += $product->getPrice();
         }
-        if($cardExpiringDate < $currentYear){
-            return "Non puo effetturare transazioni";
-        }else{
-            return $totale-($totale*$sale/100);
+    }
+    public function checkout($_indexPaymentMethod){
+        //prendere metodo di pagamento
+            $method = $this->getPaymentMethod(($_indexPaymentMethod));
+            var_dump($method);
+        //prendere il totale
+            $total = $this->getTotal();
+        //ritornare lo sconto
+            $discount = $this->getSale();
+        //Calcolare il totale con lo sconto
+            $totalWithDiscount = $total - ($total * $discount / 100);  
+        //Controllare che il metodo di pagamento sia valido
+        var_dump($method->validatePayment());   
+        if($method->validatePayment()){
+            echo "il pagamento è andato a buon fine";
+
+        }else {
+            echo "pagamento non riuscito";
         }
+            return $totalWithDiscount;
     }
 }
