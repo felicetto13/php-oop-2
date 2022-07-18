@@ -21,6 +21,8 @@ trait Cart {
         foreach($this->products as $product){
             $totale += $product->getPrice();
         }
+        return $totale;
+        
     }
     public function checkout($_indexPaymentMethod){
         //prendere metodo di pagamento
@@ -40,6 +42,8 @@ trait Cart {
         }else {
             echo "pagamento non riuscito";
         }
+
+        var_dump($total);
             return $totalWithDiscount;
     }
 }
